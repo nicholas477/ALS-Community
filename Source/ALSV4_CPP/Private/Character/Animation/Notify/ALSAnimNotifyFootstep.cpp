@@ -165,6 +165,11 @@ void UALSAnimNotifyFootstep::Notify(USkeletalMeshComponent* MeshComp, UAnimSeque
 					break;
 				}
 			}
+
+			if (bMakeNoise)
+			{
+				MeshOwner->MakeNoise(NoiseLoudness, Cast<APawn>(MeshOwner), Hit.Location, NoiseMaxRange, NoiseTag);
+			}
 		}
 	}
 }

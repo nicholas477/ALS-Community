@@ -79,4 +79,16 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Niagara")
 	bool bSpawnNiagara = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Noise")
+	bool bMakeNoise = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Noise")
+	float NoiseLoudness = 1.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Noise")
+	float NoiseMaxRange = 0.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Noise")
+	FName NoiseTag = NAME_None;
 };

@@ -229,7 +229,10 @@ void AALSBaseCharacter::RagdollStart()
 	}
 
 	// Fixes character mesh is showing default A pose for a split-second just before ragdoll ends in listen server games
-	GetMesh()->bOnlyAllowAutonomousTickPose = true;
+	if (IsPlayerControlled())
+	{
+		GetMesh()->bOnlyAllowAutonomousTickPose = true;
+	}
 	
 	SetReplicateMovement(false);
 }
@@ -328,7 +331,6 @@ void AALSBaseCharacter::SetGait(const EALSGait NewGait, bool bForce)
 	}
 }
 
-
 void AALSBaseCharacter::SetDesiredStance(EALSStance NewStance)
 {
 	DesiredStance = NewStance;
@@ -426,7 +428,6 @@ void AALSBaseCharacter::SetOverlayState(const EALSOverlayState NewState, bool bF
 		}
 	}
 }
-
 
 void AALSBaseCharacter::Server_SetOverlayState_Implementation(EALSOverlayState NewState, bool bForce)
 {
@@ -765,6 +766,7 @@ void AALSBaseCharacter::SetActorLocationDuringRagdoll(float DeltaTime)
 	{
 		// Set the pelvis as the target location.
 		TargetRagdollLocation = GetMesh()->GetSocketLocation(NAME_Pelvis);
+
 		if (!HasAuthority())
 		{
 			Server_SetMeshLocationDuringRagdoll(TargetRagdollLocation);
@@ -829,6 +831,12 @@ void AALSBaseCharacter::SetActorLocationDuringRagdoll(float DeltaTime)
 			(TargetRagdollLocation - GetMesh()->GetSocketLocation(RagdollSocketPullName)) * ServerRagdollPull,
 			RagdollSocketPullName, true);
 	}
+
+	if (IsLocallyControlled() && !IsPlayerControlled())
+	{
+		return;
+	}
+
 	SetActorLocationAndTargetRotation(bRagdollOnGround ? NewRagdollLoc : TargetRagdollLocation, TargetRagdollRotation);
 }
 

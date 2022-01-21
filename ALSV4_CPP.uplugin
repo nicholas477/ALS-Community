@@ -29,10 +29,14 @@
 			]
 		}
 	],
-  "Plugins": [
-    {
-      "Name": "Niagara",
-      "Enabled": true
-    }
-  ]
+	"Plugins": [
+		{
+			"Name": "Niagara",
+			"Enabled": true
+		},
+		{
+			"Name": "NoiseVisualization",
+			"Enabled": true
+		},
+	]
 }

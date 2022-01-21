@@ -11,11 +11,14 @@
 #include "Engine/StaticMesh.h"
 #include "AI/ALSAIController.h"
 #include "Kismet/GameplayStatics.h"
+#include "NoiseVisualizationComponent.h"
 
 AALSCharacter::AALSCharacter(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
 	AIControllerClass = AALSAIController::StaticClass();
+
+	NoiseVisualizationComponent = CreateDefaultSubobject<UNoiseVisualizationComponent>(FName("Noise Visualization Component"));
 }
 
 ECollisionChannel AALSCharacter::GetThirdPersonTraceParams(FVector& TraceOrigin, float& TraceRadius)
@@ -36,4 +39,11 @@ FTransform AALSCharacter::GetThirdPersonPivotTarget()
 FVector AALSCharacter::GetFirstPersonCameraTarget()
 {
 	return GetMesh()->GetSocketLocation(TEXT("FP_Camera"));
+}
+
+void AALSCharacter::MakeNoise(float Loudness, APawn* NoiseInstigator, FVector NoiseLocation, float MaxRange, FName Tag)
+{
+	NoiseVisualizationComponent->OnMakeNoise.Broadcast(this, Loudness, NoiseInstigator, NoiseLocation, MaxRange, Tag);
+
+	AActor::MakeNoise(Loudness, NoiseInstigator, NoiseLocation, MaxRange, Tag);
 }

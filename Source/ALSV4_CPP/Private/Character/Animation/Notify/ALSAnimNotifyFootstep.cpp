@@ -15,6 +15,7 @@
 #include "PhysicalMaterials/PhysicalMaterial.h"
 #include "NiagaraSystem.h"
 #include "NiagaraFunctionLibrary.h"
+#include "Character/ALSCharacter.h"
 
 
 const FName NAME_Mask_FootstepSound(TEXT("Mask_FootstepSound"));
@@ -166,9 +167,9 @@ void UALSAnimNotifyFootstep::Notify(USkeletalMeshComponent* MeshComp, UAnimSeque
 				}
 			}
 
-			if (bMakeNoise)
+			if (bMakeNoise && Cast<AALSCharacter>(MeshOwner))
 			{
-				MeshOwner->MakeNoise(NoiseLoudness, Cast<APawn>(MeshOwner), Hit.Location, NoiseMaxRange, NoiseTag);
+				Cast<AALSCharacter>(MeshOwner)->MakeNoise(NoiseLoudness, Cast<APawn>(MeshOwner), Hit.Location, NoiseMaxRange, NoiseTag);
 			}
 		}
 	}

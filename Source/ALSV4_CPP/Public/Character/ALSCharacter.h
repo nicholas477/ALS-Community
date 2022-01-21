@@ -12,6 +12,8 @@
 #include "Character/ALSBaseCharacter.h"
 #include "ALSCharacter.generated.h"
 
+class UNoiseVisualizationComponent;
+
 /**
  * Specialized character class, with additional features like held object etc.
  */
@@ -39,6 +41,12 @@ public:
 	virtual FTransform GetThirdPersonPivotTarget() override;
 
 	virtual FVector GetFirstPersonCameraTarget() override;
+
+	void MakeNoise(float Loudness = 1.f, APawn* NoiseInstigator = nullptr, FVector NoiseLocation = FVector::ZeroVector, float MaxRange = 0.f, FName Tag = NAME_None);
+
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Noise")
+		UNoiseVisualizationComponent* NoiseVisualizationComponent;
 
 private:
 	bool bNeedsColorReset = false;

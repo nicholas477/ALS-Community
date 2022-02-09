@@ -453,6 +453,12 @@ void AALSBaseCharacter::EventOnLanded()
 		// After 0.5 secs, reset braking friction factor to zero
 		GetWorldTimerManager().SetTimer(OnLandedFrictionResetTimer, this,
 		                                &AALSBaseCharacter::OnLandFrictionReset, 0.5f, false);
+
+		// Go back to crouching after falling
+		if (DesiredStance == EALSStance::Crouching && Stance == EALSStance::Standing)
+		{
+			Crouch();
+		}
 	}
 }
 

@@ -151,6 +151,13 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, Category = "ALS|Debug")
 	AALSBaseCharacter* DebugFocusCharacter = nullptr;
+
+	// Added for the gameplay debugger category toggles
+	static void SetDebugView(bool bNewDebugView) { bDebugView = bNewDebugView; };
+	static void SetShowTraces(bool bNewShowTraces) { bShowTraces = bNewShowTraces; };
+	static void SetShowDebugShapes(bool bNewShowDebugShapes) { bShowDebugShapes = bNewShowDebugShapes; };
+	static void SetShowLayerColors(bool bNewShowLayerColors) { bShowLayerColors = bNewShowLayerColors; };
+
 private:
 	static bool bDebugView;
 

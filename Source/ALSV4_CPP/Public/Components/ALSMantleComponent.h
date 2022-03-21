@@ -17,6 +17,8 @@
 // forward declarations
 class UALSDebugComponent;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMantleDelegate);
+
 
 UCLASS(Blueprintable, BlueprintType)
 class ALSV4_CPP_API UALSMantleComponent : public UActorComponent
@@ -49,6 +51,12 @@ public:
 	/** Implement on BP to get correct mantle parameter set according to character state */
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "ALS|Mantle System")
 	FALSMantleAsset GetMantleAsset(EALSMantleType MantleType, EALSOverlayState CurrentOverlayState);
+
+	UPROPERTY(BlueprintAssignable, Category = "ALS|Mantle System")
+		FOnMantleDelegate OnMantleStart;
+
+	UPROPERTY(BlueprintAssignable, Category = "ALS|Mantle System")
+		FOnMantleDelegate OnMantleEnd;
 
 protected:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, 

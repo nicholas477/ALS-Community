@@ -8,4 +8,30 @@
 #include "ALSV4_CPP.h"
 #include "Modules/ModuleManager.h"
 
-IMPLEMENT_MODULE(FDefaultGameModuleImpl, ALSV4_CPP);
+#if WITH_GAMEPLAY_DEBUGGER
+#include "GameplayDebugger.h"
+#include "GameplayDebugger/GameplayDebuggerCategory_ALS.h"
+#endif // WITH_GAMEPLAY_DEBUGGER
+
+void FALSV4CPP_Module::StartupModule()
+{
+#if WITH_GAMEPLAY_DEBUGGER
+	IGameplayDebugger& GameplayDebuggerModule = IGameplayDebugger::Get();
+	GameplayDebuggerModule.RegisterCategory("ALS", IGameplayDebugger::FOnGetCategory::CreateStatic(&FGameplayDebuggerCategory_ALS::MakeInstance), EGameplayDebuggerCategoryState::EnabledInGameAndSimulate);
+	GameplayDebuggerModule.NotifyCategoriesChanged();
+#endif
+}
+
+void FALSV4CPP_Module::ShutdownModule()
+{
+#if WITH_GAMEPLAY_DEBUGGER
+	if (IGameplayDebugger::IsAvailable())
+	{
+		IGameplayDebugger& GameplayDebuggerModule = IGameplayDebugger::Get();
+		GameplayDebuggerModule.UnregisterCategory("ALS");
+		GameplayDebuggerModule.NotifyCategoriesChanged();
+	}
+#endif
+}
+
+IMPLEMENT_MODULE(FALSV4CPP_Module, ALSV4_CPP);

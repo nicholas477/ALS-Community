@@ -149,6 +149,8 @@ void UALSMantleComponent::MantleStart(float MantleHeight, const FALSComponentAnd
 		                                                    EMontagePlayReturnType::MontageLength,
 		                                                    MantleParams.StartingPosition, false);
 	}
+
+	OnMantleStart.Broadcast();
 }
 
 bool UALSMantleComponent::MantleCheck(const FALSMantleTraceSettings& TraceSettings, EDrawDebugTrace::Type DebugType)
@@ -394,6 +396,8 @@ void UALSMantleComponent::MantleEnd()
 
 	// Enable ticking back after mantle ends
 	SetComponentTickEnabledAsync(true);
+
+	OnMantleEnd.Broadcast();
 }
 
 void UALSMantleComponent::OnOwnerJumpInput()
